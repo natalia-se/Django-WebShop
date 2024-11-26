@@ -13,6 +13,72 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
+    {% load static %}
+    <style>
+      .jumbotron {
+        background-image: url('{% static "images/homeimg.jpg" %}'); /* Correct use of static tag */
+        background-size: cover;
+        background-position: center;
+        color: white;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        padding: 5rem 2rem;
+        position: relative;
+        width: 1300px;
+        height: 400px;
+        top: 54px;
+        left: -1px;
+        gap: 0px;
+        opacity: 0px;
+      }
+      .card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 600px;
+        height: 250px;
+        place-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #f7f8facc;
+        gap: 0px;
+        align-items: center;
+        text-align: center;
+        border-radius: 2px 0px 0px 0px;
+        opacity: 10px;
+      }
+      .card h1 {
+        font-size: 40px;
+        font-family: "Poppins", sans-serif; /* Optional, for a fancy cake shop vibe */
+        font-weight: 500; /* Font weight */
+        line-height: 57.6px; /* Line height in pixels */
+        text-align: center; /* Text alignment */
+        text-underline-position: from-font; /* Underline position, this is specific to some browsers */
+        text-decoration-skip-ink: none;
+      }
+      .card p {
+        font-family: "Alef", sans-serif; /* Font family set to Alef */
+        font-size: 18px; /* Font size in pixels */
+        font-weight: 400; /* Normal font weight */
+        line-height: 25.6px; /* Line height in pixels */
+        text-align: center; /* Center-aligns the text */
+        text-underline-position: from-font; /* Controls the underline position */
+        text-decoration-skip-ink: none;
+        color: #1d252c;
+      }
+      .card .btn {
+        width: 300px; /* Set button width to 300px */
+        height: 40px; /* Set button height to 40px */
+        background-color: #d30448;
+        color: white;
+        font-size: 16px; /* Text font size */
+        border: none; /* No border around the button */
+        cursor: pointer;
+        justify-content: center;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
     <!-- prettier-ignore -->
