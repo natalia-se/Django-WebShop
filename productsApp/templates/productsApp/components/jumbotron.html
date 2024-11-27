@@ -1,12 +1,19 @@
 
 {% load static %}
-    <div class="jumbotron">
-        {% comment %} <img src="{% static 'productApp/images/homeimg.jpg' %}"> {% endcomment %}
-        <div class='card'>
-            <h1>The Lexicake Shop</h1>
-            <p>Your destination for irresistible cakes and delightful treats.</p>
-            <p>All handmade and natural ingredients used to craft and deliver customized cakes</p>
-            <a href="#collection" class="btn">Discover our collections</a>
-        </div>
+<div class="jumbotron jumbotron-fluid" style="background: url('{% static "images/homeimg.jpg" %}') no-repeat center center;position:relative; background-size: cover;height: 400px; color: white; padding:5rem 2rem;">
+    <div class="container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 250px; background: #F7F8FACC; border-radius: 2px 0px 0px 0px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+      {% comment %} <img src=url('{% static "images/homeimg.jpg" %}')> {% endcomment %}
+      <div class="card mt-4" style="width: 100%; background: transparent; border: none;">
+        <div class="card-body">
+            <h1 class="card-title" style="font-size: 40px;font-family: 'Poppins',sans-serif; ">The Lexicake Shop</h1>
+            <p class="card-text" style="font-size: 18px;font-family: 'Alef', sans-serif;">
+                Your destination for irresistible cakes and delightful treats.<br>
+        All handmade and natural ingredients used to craft and deliver customized cakes.</p>
+         <a class="btn btn-primary btn-lg" href="#" role="button" style="background-color: #D30448;border: none;justify-content: center;text-align:center; color: white;font-size: 16px;">Discover our collections</a>
+         
+        </div>  
     </div>
-
+    </div>
+  </div>
+    
+          

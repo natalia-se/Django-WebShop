@@ -1,0 +1,62 @@
+.container {
+    display: flex; /* Use flexbox for side-by-side layout */
+    gap: 20px; /* Space between image and details */
+    padding: 20px;
+}
+
+/* Left Section (Product Image) */
+.left-section {
+    flex: 1; /* Take up available space */
+    text-align: center; /* Center image */
+}
+
+.left-section .product-image {
+    max-width: 100%; /* Make image responsive */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.free-shipping {
+    color: green;
+    font-weight: bold;
+}
+
+/* Right Section (Product Details) */
+.right-section {
+    flex: 1; /* Take up remaining space */
+}
+
+.right-section h1 {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #ff3366;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #b1153e;
+}
+
+/* Product Details */
+.product-details {
+    margin-top: 20px;
+}
+
+.product-details p {
+    font-size: 1.1em;
+}
