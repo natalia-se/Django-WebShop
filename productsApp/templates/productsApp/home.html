@@ -2,8 +2,15 @@
 {% extends 'productsApp/base.html' %} 
 {% block title %}Home Page{% endblock %}
 {% block content %}
+
 <h1>Welcome to Our Store</h1>
+
 {% block jumbotron %} 
 {% include 'productsApp/components/jumbotron.html' %} 
-{%endblock %}
+{% endblock %}
+
+{% block products_list.html %} 
+{% include 'productsApp/components/products_list.html' %} 
+{% endblock %}
+
 {% endblock %}
