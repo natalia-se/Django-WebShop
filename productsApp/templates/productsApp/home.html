@@ -3,5 +3,7 @@
 {% block title %}Home Page{% endblock %}
 {% block content %}
 <h1>Welcome to Our Store</h1>
-
+{% block jumbotron %} 
+{% include 'productsApp/components/jumbotron.html' %} 
+{%endblock %}
 {% endblock %}
