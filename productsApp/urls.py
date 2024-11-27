@@ -4,7 +4,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.home, name='home'),           
+    path('', views.home, name='home'),   
+    path('test/', views.test_page, name='test_page'),
+        
 ]
 
 if settings.DEBUG:  # Only serve media files in development
