@@ -5,8 +5,6 @@ from django.contrib import admin
 # Derek was here!
 from .models import Cake
 
-from .models import Cake
-
 class CakeAdmin(admin.ModelAdmin):
     # Add 'id' to the list of fields displayed in the admin list view
     list_display = ('id', 'name', 'price', 'description', 'created_at')

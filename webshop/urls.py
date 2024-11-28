@@ -21,15 +21,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from productsApp import views
 
-
-from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('productsApp.urls')),
 ]
-
 
 
 if settings.DEBUG:
