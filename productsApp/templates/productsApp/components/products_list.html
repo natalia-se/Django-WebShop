@@ -1,26 +1,7 @@
 {% load static %}
+ 
+<link rel="stylesheet" href="{% static "css/styles.css" %}" >
 
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Open+Sans">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<style>
-    .custom-img{
-        width:300px;
-        height:200px;
-        object-fit: cover;
-    }
-</style>
-</head>
-<body>
 <div class="container-xl">
   <div class="row">
     <div class="col-md-12" >
@@ -29,82 +10,21 @@
                 
             <div class="row row-cols-1 row-cols-md-3 g-4">
               <!-- First Cake -->
+            {% for cake in cakes %}
               <div class="col">
                   <div class="card h-20">
-                      <img src="{{ cake1.image.url }}" class="card-img-top custom-img img-fluid" alt="{{ cake1.name }}">
+                      <img src="{{ cake.image.url }}" class="card-img-top custom-img img-fluid" alt="{{ cake.name }}">
                       <div class="card-body">
-                          <h5 class="card-title">{{ cake1.name }}</h5>
-                          <p class="card-text">{{ cake1.price }} SEK</p>
-                          <p class="card-text">{{ cake1.description }}</p>
+                          <h5 class="card-title">{{ cake.name }}</h5>
+                          <p class="card-text">{{ cake.price }} SEK</p>
+                          <p class="card-text">{{ cake.description }}</p>
                       </div>
                   </div>
               </div>
-
-              <!-- Second Cake -->
-              <div class="col">
-                  <div class="card h-20">
-                      <img src="{{ cake2.image.url }}" class="card-img-top custom-img img-fluid" alt="{{ cake2.name }}">
-                      <div class="card-body">
-                          <h5 class="card-title">{{ cake2.name }}</h5>
-                          <p class="card-text">{{ cake2.price }} SEK</p>
-                          <p class="card-text">{{ cake2.description }}</p>
-                      </div>
-                  </div>
-              </div>
-
-              <!-- Third Cake -->
-              <div class="col">
-                  <div class="card h-20">
-                      <img src="{{ cake3.image.url }}" class="card-img-top custom-img img-fluid" alt="{{ cake3.name }}">
-                      <div class="card-body">
-                          <h5 class="card-title">{{ cake3.name }}</h5>
-                          <p class="card-text">{{ cake3.price }} SEK</p>
-                          <p class="card-text">{{ cake3.description }}</p>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-          <!-- Second Row -->
-          <div class="row row-cols-1 row-cols-md-3 g-4">
-              <!-- Fourth Cake -->
-              <div class="col">
-                  <div class="card h-20">
-                      <img src="{{ cake4.image.url }}" class="card-img-top custom-img img-fluid" alt="{{ cake4.name }}">
-                      <div class="card-body">
-                          <h5 class="card-title">{{ cake4.name }}</h5>
-                          <p class="card-text">{{ cake4.price }} SEK</p>
-                          <p class="card-text">{{ cake4.description }}</p>
-                      </div>
-                  </div>
-              </div>
-
-              <!-- Fifth Cake -->
-              <div class="col">
-                  <div class="card h-20">
-                      <img src="{{ cake5.image.url }}" class="card-img-top custom-img img-fluid" alt="{{ cake5.name }}">
-                      <div class="card-body">
-                          <h5 class="card-title">{{ cake5.name }}</h5>
-                          <p class="card-text">{{ cake5.price }} SEK</p>
-                          <p class="card-text">{{ cake5.description }}</p>
-                      </div>
-                  </div>
-              </div>
-
-              <!-- Sixth Cake -->
-              <div class="col">
-                  <div class="card h-20">
-                      <img src="{{ cake6.image.url }}" class="card-img-top custom-img img-fluid" alt="{{ cake6.name }}">
-                      <div class="card-body">
-                          <h5 class="card-title">{{ cake6.name }}</h5>
-                          <p class="card-text">{{ cake6.price }} SEK</p>
-                          <p class="card-text">{{ cake6.description }}</p>
-                      </div>
-                  </div>
-              </div>
+            {% endfor %}
+              
       <!-- Wrapper for card items -->
     </div>
   </div>
 </div>
-</body>
-</html>                                   
+</div>
