@@ -44,3 +44,10 @@ def profile(request):
         form = ProfileUpdateForm(instance=request.user)
     
     return render(request, 'productsApp/profile.html', {'form': form})
+  # return render(request, 'productsApp/components/products_list.html', {'cakes': cakes})
+    return render(request, 'productsApp/home.html')
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    return render(request, 'productsApp/components/product_descr.html', {'product': product})
+# Create your views here.
