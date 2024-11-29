@@ -1,0 +1,30 @@
+{% load static %}
+ 
+<link rel="stylesheet" href="{% static "css/styles.css" %}" >
+
+<div class="container-xl">
+  <div class="row">
+    <div class="col-md-12" >
+      <h2> Products </h2>
+            <p> Order it for you or your loved one</p>
+                
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+              <!-- First Cake -->
+            {% for cake in cakes %}
+              <div class="col">
+                  <div class="card h-20">
+                      <img src="{{ cake.image.url }}" class="card-img-top custom-img img-fluid" alt="{{ cake.name }}">
+                      <div class="card-body">
+                          <h5 class="card-title">{{ cake.name }}</h5>
+                          <p class="card-text">{{ cake.price }} SEK</p>
+                          <p class="card-text">{{ cake.description }}</p>
+                      </div>
+                  </div>
+              </div>
+            {% endfor %}
+              
+      <!-- Wrapper for card items -->
+    </div>
+  </div>
+</div>
+</div>
