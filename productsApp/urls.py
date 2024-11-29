@@ -5,8 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name='home'),   
-   # path('test/', views.test_page, name='test_page'),
-        
+     path('product/<int:product_id>/',views.product_detail,name='product_detail'),         
 ]
 
 if settings.DEBUG:  # Only serve media files in development

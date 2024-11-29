@@ -5,6 +5,8 @@ from .models import Cake
 
 from .models import Product
 
+from .models import Product
+
 def home(request):
     
     cakes = Cake.objects.all()[:6]
