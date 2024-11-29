@@ -1,9 +1,9 @@
-.custom-img{
-    width:300px;
-    height:200px;
-    object-fit: cover;
+.custom-img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
 }
-}
+
 .btn-custom {
   background-color: #d30448;
   color: white;
