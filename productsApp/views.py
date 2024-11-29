@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from .forms import SignupForm
+from django.contrib import messages
+from .forms import SignupForm, ProfileUpdateForm
 from .models import Cake
+
 
 
 def home(request):
@@ -27,4 +30,17 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, 'productsApp/signup.html', {'form': form})
-    return render(request, 'productsApp/signup.html', {'form': form})
+    
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated!')
+            return redirect('profile')
+    else:
+        form = ProfileUpdateForm(instance=request.user)
+    
+    return render(request, 'productsApp/profile.html', {'form': form})
