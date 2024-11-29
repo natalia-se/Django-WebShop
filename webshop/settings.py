@@ -133,3 +133,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'  # URL to access media files
 MEDIA_ROOT = BASE_DIR / 'media'  # Directory to store media files
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/postproductsApp/login/'  # Optional, if you want to redirect on logout
