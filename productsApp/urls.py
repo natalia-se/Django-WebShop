@@ -8,7 +8,8 @@ urlpatterns = [
     path('', views.home, name='home'), 
     path('signup/', views.signup, name='signup'), 
     path('login/', auth_views.LoginView.as_view(template_name='productsApp/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),        
+    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'), 
+    path('product/<int:product_id>/',views.product_detail,name='product_detail'),        
 ]
 
 if settings.DEBUG:  # Only serve media files in development
