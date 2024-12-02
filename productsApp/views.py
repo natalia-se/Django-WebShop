@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404, render, redirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -5,7 +6,6 @@ from django.contrib.auth import login
 from django.contrib import messages
 from .forms import SignupForm, ProfileUpdateForm
 from .models import Cake
-
 
 
 def home(request):
@@ -30,6 +30,11 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, 'productsApp/signup.html', {'form': form})
+    return render(request, 'productsApp/signup.html', {'form': form})
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Cake, id=product_id)
+    return render(request, 'productsApp/components/product_descr.html', {'product': product})
     
 
 @login_required
@@ -44,3 +49,10 @@ def profile(request):
         form = ProfileUpdateForm(instance=request.user)
     
     return render(request, 'productsApp/profile.html', {'form': form})
+  # return render(request, 'productsApp/components/products_list.html', {'cakes': cakes})
+    return render(request, 'productsApp/home.html')
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Cake, id=product_id)
+    return render(request, 'productsApp/components/product_descr.html', {'product': product})
+# Create your views here.
