@@ -8,4 +8,7 @@ def home(request):
     cakes = Cake.objects.all()[:6]
     
     return render(request, 'productsApp/home.html', {'cakes': cakes})
-  # return render(request, 'productsApp/components/products_list.html', {'cakes': cakes})
+  
+def test_page(request):
+  cakes = Cake.objects.all()[:1]
+  return render(request, 'productsApp/checkout.html',{'cakes': cakes})

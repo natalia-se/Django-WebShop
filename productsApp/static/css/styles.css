@@ -3,3 +3,26 @@
     height:200px;
     object-fit: cover;
 }
+
+.btn-custom {
+    background-color: #d30448;
+    color: white;
+    border: none;
+  }
+   
+  .btn-custom:hover {
+    background-color: #b1033a; /* Darker shade for hover effect */
+  }
+
+  .link-pink{
+    color: #d30448;
+  }
+
+  .center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+    justify-content: center;
+    height: 20vh;         
+    text-align: center;  
+  }
