@@ -25,6 +25,19 @@
   color: #b1033a;
 }
 
+.link-pink {
+  color: #d30448;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+  text-align: center;
+}
+
 .link-pink{
   color: #d30448;
 }

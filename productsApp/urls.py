@@ -17,6 +17,11 @@ urlpatterns = [
     path('password-change/', PasswordChangeView.as_view(template_name='productsApp/password-change.html', success_url='/profile/'), name='password_change'),
     path('checkout/', views.checkout, name='checkout'),      
     path('product/<int:product_id>/',views.product_detail,name='product_detail'),        
+	path('about/', views.about_us, name='about_us'), 
+´   path('cart/', views.cart_detail, name='cart_detail'),
+    path('cart/add/<int:cake_id>/', views.add_to_cart, name='add_to_cart'),
+    path('cart/remove/<int:cart_item_id>/', views.remove_from_cart, name='remove_from_cart'),
+       
 ]
 
 if settings.DEBUG:  # Only serve media files in development
