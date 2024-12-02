@@ -1,0 +1,41 @@
+
+{% extends 'productsApp/base.html' %}
+{% block content %}
+{% load static %}
+
+<body>
+    <!-- Header Section -->
+    <div class="bg-light py-5 text-center">
+        <h1 class="display-4 text-muted" style="font-family: 'Poppins', sans-serif;">We Love Cake and We Bake the Best Around!</h1>
+        <p class="lead text-dark" style="font-family: 'Poppins', sans-serif;">Welcome to Lexicake - where delicious creations are made with passion and love!</p>
+        <a class="btn btn-outline-secondary btn-lg" href="{% url 'home' %}" style="color: #D30448;" role="button">OUR MENU</a>
+    </div>
+
+    <!-- About Us Section -->
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <!-- Image Section -->
+            <div class="col-md-6">
+                <img src="{% static 'productsApp/images/bake3.jpg' %}" style="width:500px;height:400px; alt="Baker working on a cake" class="img-fluid rounded">
+            </div>
+            <!-- Text Section -->
+            <div class="col-md-5">
+                <h2 style="font-family: 'Poppins', sans-serif; color: #6c757d;">Our Bakery</h2>
+                <p style="font-family: 'Poppins', sans-serif;font-size: 17px; color: #495057; line-height: 1.6;">At Lexicake, we are dedicated to crafting beautiful and delicious cakes for every occasion. Whether it’s a birthday, wedding, or any celebration, we ensure that every cake is made with the finest ingredients and with great attention to detail. Our passion for baking shines through in every slice!</p>
+                <p style="font-family: 'Poppins', sans-serif;font-size: 17px; color: #495057; line-height: 1.6;">Come taste the difference with Lexicake!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="bg-light py-5 text-center">
+        <h3>Want to Learn More?</h3>
+        <p class="lead">Contact us or visit us to explore our full menu of cakes, pastries, and more. We’re excited to share our delicious creations with you!</p>
+    </div>
+
+    <!-- Optional: Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+{% endblock %}
