@@ -6,8 +6,8 @@ from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
-from .forms import SignupForm, ProfileUpdateForm
-from .models import Cake, Cart, CartItem
+from .forms import SignupForm, ProfileUpdateForm, ContactForm
+from .models import Cake, Cart, CartItem, Contact
 
 
 def home(request):
@@ -164,3 +164,22 @@ def merge_carts(sender, request, user, **kwargs):
     
     # Clear the session cart
     request.session['cart'] = {}
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            Contact.objects.create(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                category=form.cleaned_data['category'],
+                subject=form.cleaned_data['subject'],
+                message=form.cleaned_data['message']
+            )
+            messages.success(request, 'Your message has been sent. We will contact you soon!')
+            return render(request, 'productsApp/contact.html', {'form': ContactForm()})
+    else:
+        form = ContactForm()
+    
+    return render(request, 'productsApp/contact.html', {'form': form})
+
