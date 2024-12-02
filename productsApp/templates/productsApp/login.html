@@ -3,6 +3,9 @@
 {% block content %}
 <div class="card shadow p-4 form-container">
    <h2 class="text-center mb-4">Login</h2>
+   <p class="text-center mb-3">
+    Please login below or <a href="{% url 'signup' %}">click here to sign up</a>.
+   </p>
    {% if form.errors %}
    <div class="alert alert-danger">
        Please enter a valid username and/or password.
