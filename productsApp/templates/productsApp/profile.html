@@ -1,24 +1,24 @@
 <!-- prettier-ignore -->
 {% extends 'productsApp/base.html' %} 
-{% block title %}Sign Up{% endblock %}
+{% block title %}User Profile{% endblock %} 
 {% block content %}
 
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-6 mt-4">
-      <h2 class="text-center">Register new user</h2>
+      <h2 class="text-center">Your Profile</h2>
       <form method="post" class="needs-validation" novalidate>
         {% csrf_token %} {% for field in form %}
         <div class="row mb-3">
           <!-- Label -->
           <label
             for="{{ field.id_for_label }}"
-            class="col-sm-4 col-form-label fw-bolder"
+            class="col-sm-3 col-form-label fw-bolder"
           >
             {{ field.label }}
           </label>
           <!-- Input and Validation Errors -->
-          <div class="col-sm-8">
+          <div class="col-sm-9">
             {{ field }} {% if field.errors %}
             <div class="text-danger">{{ field.errors }}</div>
             {% endif %}
@@ -26,10 +26,14 @@
         </div>
         {% endfor %}
         <div class="text-end">
-          <button type="submit" class="btn btn-custom">Sign Up</button>
+          <button type="submit" class="btn btn-custom">Update Profile</button>
         </div>
       </form>
+      <a href="{% url 'password_change' %}" class="btn btn-link pink"
+        >Do you want to change your Password</a
+      >
     </div>
   </div>
 </div>
+
 {% endblock %}

@@ -13,3 +13,12 @@
 .btn-custom:hover {
   background-color: #b1033a; /* Darker shade for hover effect */
 }
+
+.custom-input {
+  background-color: #f8f9fa; /* Light */
+  border: 1px solid #e9ecef; /* Optional: Adjust border style */
+}
+
+.pink {
+  color: #b1033a;
+}
