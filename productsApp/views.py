@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404, render, redirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -32,6 +33,11 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, 'productsApp/signup.html', {'form': form})
+    return render(request, 'productsApp/signup.html', {'form': form})
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Cake, id=product_id)
+    return render(request, 'productsApp/components/product_descr.html', {'product': product})
     
 
 @login_required
