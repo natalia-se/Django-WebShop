@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <img
-      src="{% static 'images/logo_pink.png' %}"
+      src="{% static 'productsApp/images/logo_pink.png' %}"
       alt="Logo"
       class="img-fluid mb-2"
       style="max-width: 150px"
@@ -23,23 +23,8 @@
       id="navbarSupportedContent"
     >
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-        <li class="nav-item dropdown me-4">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Home
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Products</a></li>
-            <li><a class="dropdown-item" href="#">Testimonials</a></li>
-            <!-- <li><hr class="dropdown-divider" /></li> -->
-            <li><a class="dropdown-item" href="#">Popular</a></li>
-          </ul>
+        <li class="nav-item me-4">
+          <a class="nav-link" href="{% url 'home' %}"> Home </a>
         </li>
         <li class="nav-item me-4">
           <a class="nav-link" aria-current="page" href="#">About</a>
@@ -49,10 +34,24 @@
         </li>
       </ul>
       <div class="d-flex align-items-center justify-content-center">
-        <a href="#" class="btn me-2 text-secondary">
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}" style="display: inline">
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="btn btn-link nav-link text-secondary me-4"
+            style="padding: 0; border: none; background: none"
+          >
+            Logout
+          </button>
+        </form>
+        <a href="{% url 'profile' %}" class="btn me-2 text-secondary">
           <i class="fa-solid fa-user"></i>
           <!-- Profile Icon -->
         </a>
+        {% else %}
+        <a class="nav-link text-secondary" href="{% url 'login' %}"> Login </a>
+        {% endif %}
         <a href="#" class="btn text-secondary">
           <i class="fa-solid fa-cart-shopping"></i>
           <!-- Cart Icon -->

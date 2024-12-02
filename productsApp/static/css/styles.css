@@ -1,28 +1,39 @@
-.custom-img{
-    width:300px;
-    height:200px;
-    object-fit: cover;
+
+
+.custom-img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
 }
 
 .btn-custom {
-    background-color: #d30448;
-    color: white;
-    border: none;
-  }
-   
-  .btn-custom:hover {
-    background-color: #b1033a; /* Darker shade for hover effect */
-  }
+  background-color: #d30448;
+  color: white;
+  border: none;
+}
 
-  .link-pink{
-    color: #d30448;
-  }
+.btn-custom:hover {
+  background-color: #b1033a; /* Darker shade for hover effect */
+}
 
-  .center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;   
-    justify-content: center;
-    height: 20vh;         
-    text-align: center;  
-  }
+.custom-input {
+  background-color: #f8f9fa; /* Light */
+  border: 1px solid #e9ecef; /* Optional: Adjust border style */
+}
+
+.pink {
+  color: #b1033a;
+}
+
+.link-pink{
+  color: #d30448;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   
+  justify-content: center;
+  height: 20vh;         
+  text-align: center;  
+}
