@@ -1,0 +1,71 @@
+{% extends 'productsApp/base.html' %} 
+{% load static %}
+{% block title %}Checkout Page{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static "css/styles.css" %}" >
+
+<div class= "p-3 center">
+<h4 class= "text-center "> Your Cart Items</h4> 
+<a class="link-pink a:hover"> Back to Shopping > </a>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Total</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cake in cakes %}
+                    <tr>
+                        <td class="col-sm-8 col-md-6">
+                        <div class="media">
+                            <a class="thumbnail pull-left" href="#">  <img src="{{ cake.image.url }}" class="custom-img img-fluid" alt="{{ cake.name }}"> </a>
+                            
+                                {{ cake.name }}
+                           
+                        </div></td>
+                        <td class="col-sm-1 col-md-1" style="text-align: center">
+                        <input type="email" class="form-control" id="exampleInputEmail1" value="3">
+                        </td>
+                        <td class="col-sm-1 col-md-1 text-center">{{ cake.price }} SEK</td>
+                        <td class="col-sm-1 col-md-1 text-center">{{ cake.price }} SEK</td>
+                        <td class="col-sm-1 col-md-1">
+                    <a class="link-pink a:hover">Remove </a> 
+                     </td>
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Subtotal</h5></td>
+                        <td class="text-right"><h5><strong>2400 SEK</strong></h5></td>
+                    </tr>
+
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+
+                        
+                        <td>
+                        <button type="button" class="btn btn-custom">
+                            <span>Checkout </span>
+                        </button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

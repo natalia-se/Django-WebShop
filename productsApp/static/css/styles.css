@@ -1,3 +1,5 @@
+
+
 .custom-img {
   width: 300px;
   height: 200px;
@@ -21,4 +23,17 @@
 
 .pink {
   color: #b1033a;
+}
+
+.link-pink{
+  color: #d30448;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   
+  justify-content: center;
+  height: 20vh;         
+  text-align: center;  
 }
