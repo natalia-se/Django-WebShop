@@ -37,3 +37,35 @@
   height: 20vh;         
   text-align: center;  
 }
+
+
+/* Checkout Customer Information Page */
+
+.body {
+  background-color: #f8f9fa;
+}
+
+.left-section {
+  padding: 2rem;
+}
+.right-section {
+  padding: 2rem;
+  background-color: #f5f5f5;
+}
+.btn-primary-custom {
+  background-color: #d50032;
+  border-color: #d50032;
+}
+.btn-primary-custom:hover {
+  background-color: #b0002a;
+  border-color: #b0002a;
+}
+.back-to-cart {
+  color: #b1033a;
+  text-decoration: none;
+}
+.back-to-cart:hover {
+  text-decoration: underline;
+}
+
+/* ================================= */

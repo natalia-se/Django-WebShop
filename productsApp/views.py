@@ -17,6 +17,9 @@ def home(request):
 def checkout(request):
   cakes = Cake.objects.all()[:1]
   return render(request, 'productsApp/checkout.html',{'cakes': cakes})
+
+def test(request):
+  return render(request, 'productsApp/test.html')
  
 def signup(request):
     if request.method == 'POST':
