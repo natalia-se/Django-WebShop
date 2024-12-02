@@ -87,16 +87,48 @@ def add_to_cart(request, cake_id):
     
     return redirect('cart_detail')
 
+# def cart_detail(request):
+#     if request.user.is_authenticated:
+#         cart = Cart.objects.filter(user=request.user).first()
+#         items = cart.items.all() if cart else []
+#         total = sum(item.total_price for item in items)
+#     else:
+#         cart = request.session.get('cart', {})
+#         items = [{'name': item['name'], 'price': item['price'], 'quantity': item['quantity'], 'total_price': float(item['price']) * item['quantity']} for item in cart.values()]
+#         total = sum(float(item['price']) * item['quantity'] for item in cart.values())
+    
+#     return render(request, 'productsApp/cart.html', {'items': items, 'total': total})
+
 def cart_detail(request):
     if request.user.is_authenticated:
+        # For authenticated users, fetch the cart and include item id
         cart = Cart.objects.filter(user=request.user).first()
-        items = cart.items.all() if cart else []
-        total = sum(item.total_price for item in items)
+        items = []
+        if cart:
+            for item in cart.items.all():
+                items.append({
+                    'id': item.id,  # Add the CartItem id
+                    'name': item.cake.name,
+                    'price': item.cake.price,
+                    'quantity': item.quantity,
+                    'total_price': item.total_price,
+                })
+        total = sum(item['total_price'] for item in items)
     else:
+        # For non-authenticated users (session-based cart), use unique session ids
         cart = request.session.get('cart', {})
-        items = [{'name': item['name'], 'price': item['price'], 'quantity': item['quantity']} for item in cart.values()]
-        total = sum(float(item['price']) * item['quantity'] for item in cart.values())
-    
+        items = []
+        for cart_item_id, item in cart.items():
+            total_price = float(item['price']) * item['quantity']
+            items.append({
+                'id': cart_item_id,  # Use the cart_item_id as a unique identifier for session-based carts
+                'name': item['name'],
+                'price': item['price'],
+                'quantity': item['quantity'],
+                'total_price': total_price,
+            })
+        total = sum(item['total_price'] for item in items)
+
     return render(request, 'productsApp/cart.html', {'items': items, 'total': total})
 
 def remove_from_cart(request, cart_item_id=None):
@@ -115,6 +147,7 @@ def remove_from_cart(request, cart_item_id=None):
     return redirect('cart_detail')
 
 @receiver(user_logged_in)
+
 def merge_carts(sender, request, user, **kwargs):
     session_cart = request.session.get('cart', {})
     if not session_cart:

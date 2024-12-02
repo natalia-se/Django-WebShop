@@ -1,19 +1,43 @@
-
-{% extends 'productsApp/base.html' %}
-{% block content %}
-{% load static %}
+{% extends 'productsApp/base.html' %} {% block content %} {% load static %}
 
 <div class="container mt-5">
-    <div class="row align-items-center row g-3">
-        <div class="col-md-6 left-section">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid product-image"  style="width:528px;top:154px;left:172px;height:396px;">
-        </div>
-        <div class="col-md-6 right-section row g-3">
-            <h1>{{ product.name }}</h1>
-            <p class="price" style="font-family: 'Poppins',sans-serif;font-size: 26px;color: #D30448;font-weight: 600;">SEK {{ product.price }}</p>
+  <div class="row align-items-center row g-3">
+    <div class="col-md-6 left-section">
+      <img
+        src="{{ product.image.url }}"
+        alt="{{ product.name }}"
+        class="img-fluid product-image"
+        style="width: 528px; top: 154px; left: 172px; height: 396px"
+      />
+    </div>
+    <div class="col-md-6 right-section row g-3">
+      <h1>{{ product.name }}</h1>
+      <p
+        class="price"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-size: 26px;
+          color: #d30448;
+          font-weight: 600;
+        "
+      >
+        SEK {{ product.price }}
+      </p>
 
-            <a class="btn btn-primary btn" href="#" role="button" style="background-color: #D30448;border: none;justify-content: center;text-align:center; color: white;font-size: 16px;">Add to Cart</a>
-         
+      <a
+        class="btn btn-primary btn"
+        href="{% url 'add_to_cart' product.id %}"
+        role="button"
+        style="
+          background-color: #d30448;
+          border: none;
+          justify-content: center;
+          text-align: center;
+          color: white;
+          font-size: 16px;
+        "
+        >Add to Cart</a
+      >
 
             <div class="product-details" style="font-family: Helvetica;font-size: 16px;font-weight: 400;line-height: 25.6px;">
                 <p><strong>Cake Details:</strong> {{ product.description }}</p>
@@ -21,5 +45,6 @@
             </div>
         </div>
     </div>
+  </div>
 </div>
 {% endblock %}
