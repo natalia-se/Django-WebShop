@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -55,4 +56,8 @@ def profile(request):
 def product_detail(request, product_id):
     product = get_object_or_404(Cake, id=product_id)
     return render(request, 'productsApp/components/product_descr.html', {'product': product})
-# Create your views here.
+
+# Code for about us page
+def about_us(request):
+   
+    return render(request,'productsApp/components/about_us.html')
