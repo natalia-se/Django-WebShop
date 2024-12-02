@@ -1,0 +1,18 @@
+<h1>Your Cart</h1>
+{% if items %}
+<ul>
+  {% for item in items %}
+  <li>
+    {{ item.name }} - {{ item.quantity }} x ${{ item.price }} = ${{
+    item.quantity|floatformat:2|add:item.price|floatformat:2 }}
+  </li>
+  {% endfor %}
+</ul>
+<p>Total: ${{ total|floatformat:2 }}</p>
+<a
+  href="{% if user.is_authenticated %}{% url 'checkout' %}{% else %}{% url 'guest_checkout' %}{% endif %}"
+  >Checkout</a
+>
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
