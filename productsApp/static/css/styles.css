@@ -66,12 +66,8 @@
   background-color: #f5f5f5;
 }
 .btn-primary-custom {
-  background-color: #d50032;
-  border-color: #d50032;
-}
-.btn-primary-custom:hover {
-  background-color: #b0002a;
-  border-color: #b0002a;
+  background-color: #d30448;
+  border-color: #d30448;
 }
 .back-to-cart {
   color: #b1033a;

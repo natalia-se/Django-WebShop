@@ -11,17 +11,13 @@ from .models import Cake, Cart, CartItem
 
 
 def home(request):
-    
-    cakes = Cake.objects.all()[:6]
-    
-    return render(request, 'productsApp/home.html', {'cakes': cakes})
-  
-def checkout(request):
-  cakes = Cake.objects.all()[:1]
-  return render(request, 'productsApp/checkout.html',{'cakes': cakes})
+  cakes = Cake.objects.all()[:6]
+  return render(request, 'productsApp/home.html', {'cakes': cakes})
 
-def test(request):
-  return render(request, 'productsApp/test.html')
+def checkout(request):
+    cart_data = get_cart_data(request.user, request.session.get('cart', {}))
+    return render(request, 'productsApp/checkout.html', cart_data)
+
  
 def signup(request):
     if request.method == 'POST':
@@ -39,15 +35,13 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, 'productsApp/signup.html', {'form': form})
-    return render(request, 'productsApp/signup.html', {'form': form})
 
 def product_detail(request, product_id):
     product = get_object_or_404(Cake, id=product_id)
     return render(request, 'productsApp/components/product_descr.html', {'product': product})
 
 def about_us(request):
-   
-    return render(request,'productsApp/components/about_us.html')
+   return render(request,'productsApp/components/about_us.html')
 
     
 
@@ -103,36 +97,8 @@ def add_to_cart(request, cake_id):
 #     return render(request, 'productsApp/cart.html', {'items': items, 'total': total})
 
 def cart_detail(request):
-    if request.user.is_authenticated:
-        # For authenticated users, fetch the cart and include item id
-        cart = Cart.objects.filter(user=request.user).first()
-        items = []
-        if cart:
-            for item in cart.items.all():
-                items.append({
-                    'id': item.id,  # Add the CartItem id
-                    'name': item.cake.name,
-                    'price': item.cake.price,
-                    'quantity': item.quantity,
-                    'total_price': item.total_price,
-                })
-        total = sum(item['total_price'] for item in items)
-    else:
-        # For non-authenticated users (session-based cart), use unique session ids
-        cart = request.session.get('cart', {})
-        items = []
-        for cart_item_id, item in cart.items():
-            total_price = float(item['price']) * item['quantity']
-            items.append({
-                'id': cart_item_id,  # Use the cart_item_id as a unique identifier for session-based carts
-                'name': item['name'],
-                'price': item['price'],
-                'quantity': item['quantity'],
-                'total_price': total_price,
-            })
-        total = sum(item['total_price'] for item in items)
-
-    return render(request, 'productsApp/cart.html', {'items': items, 'total': total})
+    cart_data = get_cart_data(request.user, request.session.get('cart', {}))
+    return render(request, 'productsApp/cart.html', cart_data)
 
 def remove_from_cart(request, cart_item_id=None):
     if request.user.is_authenticated:
@@ -167,3 +133,38 @@ def merge_carts(sender, request, user, **kwargs):
     
     # Clear the session cart
     request.session['cart'] = {}
+
+#############################
+# Added a Helper Function for Cart Mgmt to be used inside other functions#
+
+
+def get_cart_data(user, session_cart):
+    """Helper function to calculate cart items and total."""
+    if user.is_authenticated:
+        cart = Cart.objects.filter(user=user).first()
+        items = []
+        if cart:
+            for item in cart.items.all():
+                items.append({
+                    'id': item.id,
+                    'name': item.cake.name,
+                    'price': item.cake.price,
+                    'quantity': item.quantity,
+                    'total_price': item.total_price,
+                })
+        total = sum(item['total_price'] for item in items)
+    else:
+        cart = session_cart
+        items = []
+        for cart_item_id, item in cart.items():
+            total_price = float(item['price']) * item['quantity']
+            items.append({
+                'id': cart_item_id,
+                'name': item['name'],
+                'price': item['price'],
+                'quantity': item['quantity'],
+                'total_price': total_price,
+            })
+        total = sum(item['total_price'] for item in items)
+
+    return {'items': items, 'total': total}

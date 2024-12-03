@@ -1,71 +1,67 @@
 {% extends 'productsApp/base.html' %} 
 {% load static %}
-{% block title %}Checkout Page{% endblock %}
+{% block title %}Customer Details Page{% endblock %}
 {% block content %}
 
 <link rel="stylesheet" href="{% static "css/styles.css" %}" >
+   
+</head>
+<body>
+  <div class="container col-lg-8 col-md-12 mb-4">
 
-<div class= "p-3 center">
-<h4 class= "text-center "> Your Cart Items</h4> 
-<a class="link-pink a:hover"> Back to Shopping > </a>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th class="text-center">Price</th>
-                        <th class="text-center">Total</th>
-                        <th> </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for cake in cakes %}
-                    <tr>
-                        <td class="col-sm-8 col-md-6">
-                        <div class="media">
-                            <a class="thumbnail pull-left" href="#">  <img src="{{ cake.image.url }}" class="custom-img img-fluid" alt="{{ cake.name }}"> </a>
-                            
-                                {{ cake.name }}
-                           
-                        </div></td>
-                        <td class="col-sm-1 col-md-1" style="text-align: center">
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="3">
-                        </td>
-                        <td class="col-sm-1 col-md-1 text-center">{{ cake.price }} SEK</td>
-                        <td class="col-sm-1 col-md-1 text-center">{{ cake.price }} SEK</td>
-                        <td class="col-sm-1 col-md-1">
-                    <a class="link-pink a:hover">Remove </a> 
-                     </td>
-                    </tr>
-                    {% endfor %}
-
-                    <tr>
-                        <td>   </td>
-                        <td>   </td>
-                        <td>   </td>
-                        <td><h5>Subtotal</h5></td>
-                        <td class="text-right"><h5><strong>2400 SEK</strong></h5></td>
-                    </tr>
-
-                    <tr>
-                        <td>   </td>
-                        <td>   </td>
-                        <td>   </td>
-                        <td>   </td>
-
-                        
-                        <td>
-                        <button type="button" class="btn btn-custom">
-                            <span>Checkout </span>
-                        </button></td>
-                    </tr>
-                </tbody>
-            </table>
+      <h1 class="h4 mb-4">Checkout</h1>
+      <form>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Name">
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Second Name">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email or mobile phone number</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter here">
+          </div>
+          <div class="col-12">
+            <input type="text" class="form-control" placeholder="Address and number">
+          </div>
+          <div class="col-12">
+            <input type="text" class="form-control" placeholder="Shipping note (optional)">
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="City">
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Postal Code">
+          </div>
+          <div class="col-md-4">
+            <select class="form-select">
+              <option selected>Province</option>
+              <option>Option 1</option>
+              <option>Option 2</option>
+            </select>
+          </div>
         </div>
+        <div class="mb-3 mt-3">
+          <label for="country" class="form-label">Country/Region</label>
+          <select id="country" class="form-select">
+            <option selected>Italy</option>
+            <option>Option 1</option>
+            <option>Option 2</option>
+          </select>
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="save-info">
+          <label class="form-check-label" for="save-info">Save this information for a future fast checkout</label>
+        </div>
+        <a href="{% url 'cart_detail' %}" class="link-pink"> Back to Cart </a>
+        <button type="submit" class="btn btn-custom float-end">Place the Order</button>
+      </form>
     </div>
+  </div>
 </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 {% endblock %}
