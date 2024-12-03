@@ -183,3 +183,36 @@ def contact(request):
     
     return render(request, 'productsApp/contact.html', {'form': form})
 
+def order_success_demo(request):
+    # Create dummy data to match your cart structure
+    dummy_items = [
+        {
+            'cake': {
+                'name': 'Chocolate Cake',
+                'image': {
+                    'url': '/media/cakes/chocolate.jpg'  # Use an existing image path
+                },
+                'price': '29.99'
+            },
+            'quantity': 1,
+            'total_price': '29.99'
+        },
+        {
+            'cake': {
+                'name': 'Vanilla Cake',
+                'image': {
+                    'url': '/media/cakes/vanilla.jpg'  # Use an existing image path
+                },
+                'price': '24.99'
+            },
+            'quantity': 1,
+            'total_price': '24.99'
+        }
+    ]
+    
+    context = {
+        'cart_items': dummy_items,
+        'total': '54.98'
+    }
+    
+    return render(request, 'productsApp/order_success.html', context)
