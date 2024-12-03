@@ -6,8 +6,8 @@ from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
-from .forms import SignupForm, ProfileUpdateForm
-from .models import Cake, Cart, CartItem
+from .forms import SignupForm, ProfileUpdateForm, ContactForm
+from .models import Cake, Cart, CartItem, Contact
 
 
 def home(request):
@@ -15,10 +15,9 @@ def home(request):
   return render(request, 'productsApp/home.html', {'cakes': cakes})
 
 def checkout(request):
-    cart_data = get_cart_data(request.user, request.session.get('cart', {}))
-    return render(request, 'productsApp/checkout.html', cart_data)
 
- 
+    return render(request, 'productsApp/checkout.html')
+
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -97,8 +96,36 @@ def add_to_cart(request, cake_id):
 #     return render(request, 'productsApp/cart.html', {'items': items, 'total': total})
 
 def cart_detail(request):
-    cart_data = get_cart_data(request.user, request.session.get('cart', {}))
-    return render(request, 'productsApp/cart.html', cart_data)
+   if request.user.is_authenticated:
+        # For authenticated users, fetch the cart and include item id
+        cart = Cart.objects.filter(user=request.user).first()
+        items = []
+        if cart:
+            for item in cart.items.all():
+                items.append({
+                    'id': item.id,  # Add the CartItem id
+                    'name': item.cake.name,
+                    'price': item.cake.price,
+                    'quantity': item.quantity,
+                    'total_price': item.total_price,
+                })
+        total = sum(item['total_price'] for item in items)
+   else:
+        # For non-authenticated users (session-based cart), use unique session ids
+        cart = request.session.get('cart', {})
+        items = []
+        for cart_item_id, item in cart.items():
+            total_price = float(item['price']) * item['quantity']
+            items.append({
+                'id': cart_item_id,  # Use the cart_item_id as a unique identifier for session-based carts
+                'name': item['name'],
+                'price': item['price'],
+                'quantity': item['quantity'],
+                'total_price': total_price,
+            })
+        total = sum(item['total_price'] for item in items)
+        return render(request, 'productsApp/cart.html', {'items': items, 'total': total})
+
 
 def remove_from_cart(request, cart_item_id=None):
     if request.user.is_authenticated:
@@ -134,37 +161,21 @@ def merge_carts(sender, request, user, **kwargs):
     # Clear the session cart
     request.session['cart'] = {}
 
-#############################
-# Added a Helper Function for Cart Mgmt to be used inside other functions#
-
-
-def get_cart_data(user, session_cart):
-    """Helper function to calculate cart items and total."""
-    if user.is_authenticated:
-        cart = Cart.objects.filter(user=user).first()
-        items = []
-        if cart:
-            for item in cart.items.all():
-                items.append({
-                    'id': item.id,
-                    'name': item.cake.name,
-                    'price': item.cake.price,
-                    'quantity': item.quantity,
-                    'total_price': item.total_price,
-                })
-        total = sum(item['total_price'] for item in items)
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            Contact.objects.create(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                category=form.cleaned_data['category'],
+                subject=form.cleaned_data['subject'],
+                message=form.cleaned_data['message']
+            )
+            messages.success(request, 'Your message has been sent. We will contact you soon!')
+            return render(request, 'productsApp/contact.html', {'form': ContactForm()})
     else:
-        cart = session_cart
-        items = []
-        for cart_item_id, item in cart.items():
-            total_price = float(item['price']) * item['quantity']
-            items.append({
-                'id': cart_item_id,
-                'name': item['name'],
-                'price': item['price'],
-                'quantity': item['quantity'],
-                'total_price': total_price,
-            })
-        total = sum(item['total_price'] for item in items)
+        form = ContactForm()
+    
+    return render(request, 'productsApp/contact.html', {'form': form})
 
-    return {'items': items, 'total': total}

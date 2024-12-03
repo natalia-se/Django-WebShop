@@ -39,3 +39,20 @@ class CartItem(models.Model):
     @property
     def total_price(self):
         return self.quantity * self.cake.price
+    
+class Contact(models.Model):
+    CATEGORY_CHOICES = [
+        ('custom_cake', 'Custom Cake Request'),
+        ('existing_order', 'Question About Existing Order'),
+        ('other', 'Other Inquiry')
+    ]
+    
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.subject} from {self.name}"
