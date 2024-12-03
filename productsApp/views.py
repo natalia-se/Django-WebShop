@@ -222,13 +222,28 @@ def place_order(request):
         )
 
         # Add Order Items
+        cart_items = []
+        total = 0
         for item in items:
             if request.user.is_authenticated:
                 # `item` is a CartItem object
-                OrderItem.objects.create(order=order, cake=item.cake, quantity=item.quantity)
+                cake = item.cake
+                quantity = item.quantity
             else:
                 # `item` is a dictionary for session-based cart
-                OrderItem.objects.create(order=order, cake=item['cake'], quantity=item['quantity'])
+                cake = item['cake']
+                quantity = item['quantity']
+
+            total_price = cake.price * quantity
+            OrderItem.objects.create(order=order, cake=cake, quantity=quantity)
+            
+            # Prepare cart_items for the template
+            cart_items.append({
+                'cake': cake,
+                'quantity': quantity,
+                'total_price': total_price,
+            })
+            total += total_price
 
         # Clear the cart
         if request.user.is_authenticated:
@@ -236,7 +251,11 @@ def place_order(request):
         else:
             request.session['cart'] = {}
 
-        return render(request, 'productsApp/order_success.html', {'order': order})
+        # Pass order details to the success page
+        return render(request, 'productsApp/order_success.html', {
+            'order': order,
+            'cart_items': cart_items,
+            'total': total,
+        })
 
     return render(request, 'productsApp/checkout.html')
-
