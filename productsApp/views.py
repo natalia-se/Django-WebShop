@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 from .forms import SignupForm, ProfileUpdateForm, ContactForm
-from .models import Cake, Cart, CartItem, Contact
+from .models import Cake, Cart, CartItem, Contact, Order, OrderItem
 
 
 def home(request):
@@ -78,6 +78,7 @@ def add_to_cart(request, cake_id):
             cart[str(cake.id)]['quantity'] += 1
         else:
             cart[str(cake.id)] = {
+                'cake_id': cake.id,
                 'name': cake.name,
                 'price': str(cake.price),  # Convert Decimal to str for JSON serialization
                 'quantity': 1,
@@ -86,18 +87,6 @@ def add_to_cart(request, cake_id):
         request.session['cart'] = cart
     
     return redirect('cart_detail')
-
-# def cart_detail(request):
-#     if request.user.is_authenticated:
-#         cart = Cart.objects.filter(user=request.user).first()
-#         items = cart.items.all() if cart else []
-#         total = sum(item.total_price for item in items)
-#     else:
-#         cart = request.session.get('cart', {})
-#         items = [{'name': item['name'], 'price': item['price'], 'quantity': item['quantity'], 'total_price': float(item['price']) * item['quantity']} for item in cart.values()]
-#         total = sum(float(item['price']) * item['quantity'] for item in cart.values())
-    
-#     return render(request, 'productsApp/cart.html', {'items': items, 'total': total})
 
 def cart_detail(request):
     if request.user.is_authenticated:
@@ -108,10 +97,12 @@ def cart_detail(request):
             for item in cart.items.all():
                 items.append({
                     'id': item.id,  # Add the CartItem id
+                    'cake_id': item.cake.id,
                     'name': item.cake.name,
                     'price': item.cake.price,
                     'quantity': item.quantity,
                     'total_price': item.total_price,
+                    'image_url': item.cake.image.url if item.cake.image else None,  # Include the image URL
                 })
         total = sum(item['total_price'] for item in items)
     else:
@@ -122,10 +113,12 @@ def cart_detail(request):
             total_price = float(item['price']) * item['quantity']
             items.append({
                 'id': cart_item_id,  # Use the cart_item_id as a unique identifier for session-based carts
+                'cake_id': item['cake_id'],
                 'name': item['name'],
                 'price': item['price'],
                 'quantity': item['quantity'],
                 'total_price': total_price,
+                'image_url': item['image_url'] if 'image_url' in item else None,  # Include image URL if available
             })
         total = sum(item['total_price'] for item in items)
 
@@ -183,3 +176,86 @@ def contact(request):
     
     return render(request, 'productsApp/contact.html', {'form': form})
 
+def place_order(request):
+    if request.method == 'POST':
+        # Collect order details from the form
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        postal_code = request.POST.get('postal_code')
+        province = request.POST.get('province')
+        country = request.POST.get('country')
+        shipping_method = request.POST.get('shipping_method')
+        shipping_notes = request.POST.get('shipping_notes')
+
+        if request.user.is_authenticated:
+            # Fetch items from the user's database-backed cart
+            cart = Cart.objects.filter(user=request.user).first()
+            items = cart.items.all() if cart else []
+        else:
+            # Fetch items from the session cart
+            session_cart = request.session.get('cart', {})
+            items = [{
+                'cake': Cake.objects.get(id=cake_id),
+                'quantity': item['quantity']
+            } for cake_id, item in session_cart.items()]
+
+        # Ensure the cart is not empty
+        if not items:
+            return redirect('cart_detail')  # Redirect to cart if it's empty
+
+        # Create the Order
+        order = Order.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            address=address,
+            city=city,
+            postal_code=postal_code,
+            province=province,
+            country=country,
+            shipping_method=shipping_method,
+            shipping_notes=shipping_notes,
+        )
+
+        # Add Order Items
+        cart_items = []
+        total = 0
+        for item in items:
+            if request.user.is_authenticated:
+                # `item` is a CartItem object
+                cake = item.cake
+                quantity = item.quantity
+            else:
+                # `item` is a dictionary for session-based cart
+                cake = item['cake']
+                quantity = item['quantity']
+
+            total_price = cake.price * quantity
+            OrderItem.objects.create(order=order, cake=cake, quantity=quantity)
+            
+            # Prepare cart_items for the template
+            cart_items.append({
+                'cake': cake,
+                'quantity': quantity,
+                'total_price': total_price,
+            })
+            total += total_price
+
+        # Clear the cart
+        if request.user.is_authenticated:
+            cart.items.all().delete()
+        else:
+            request.session['cart'] = {}
+
+        # Pass order details to the success page
+        return render(request, 'productsApp/order_success.html', {
+            'order': order,
+            'cart_items': cart_items,
+            'total': total,
+        })
+
+    return render(request, 'productsApp/checkout.html')
