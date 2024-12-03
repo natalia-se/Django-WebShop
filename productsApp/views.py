@@ -11,15 +11,13 @@ from .models import Cake, Cart, CartItem, Contact
 
 
 def home(request):
-    
-    cakes = Cake.objects.all()[:6]
-    
-    return render(request, 'productsApp/home.html', {'cakes': cakes})
+  cakes = Cake.objects.all()[:6]
+  return render(request, 'productsApp/home.html', {'cakes': cakes})
 
-def product_detail(request, product_id):
-    product = get_object_or_404(Cake, id=product_id)
-    return render(request, 'productsApp/components/product_descr.html', {'product': product})
- 
+def checkout(request):
+
+    return render(request, 'productsApp/checkout.html')
+
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -36,15 +34,13 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, 'productsApp/signup.html', {'form': form})
-    return render(request, 'productsApp/signup.html', {'form': form})
 
 def product_detail(request, product_id):
     product = get_object_or_404(Cake, id=product_id)
     return render(request, 'productsApp/components/product_descr.html', {'product': product})
 
 def about_us(request):
-   
-    return render(request,'productsApp/components/about_us.html')
+   return render(request,'productsApp/components/about_us.html')
 
     
 
@@ -100,7 +96,7 @@ def add_to_cart(request, cake_id):
 #     return render(request, 'productsApp/cart.html', {'items': items, 'total': total})
 
 def cart_detail(request):
-    if request.user.is_authenticated:
+   if request.user.is_authenticated:
         # For authenticated users, fetch the cart and include item id
         cart = Cart.objects.filter(user=request.user).first()
         items = []
@@ -114,7 +110,7 @@ def cart_detail(request):
                     'total_price': item.total_price,
                 })
         total = sum(item['total_price'] for item in items)
-    else:
+   else:
         # For non-authenticated users (session-based cart), use unique session ids
         cart = request.session.get('cart', {})
         items = []
@@ -128,8 +124,8 @@ def cart_detail(request):
                 'total_price': total_price,
             })
         total = sum(item['total_price'] for item in items)
+        return render(request, 'productsApp/cart.html', {'items': items, 'total': total})
 
-    return render(request, 'productsApp/cart.html', {'items': items, 'total': total})
 
 def remove_from_cart(request, cart_item_id=None):
     if request.user.is_authenticated:
