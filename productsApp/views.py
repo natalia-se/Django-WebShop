@@ -259,3 +259,15 @@ def place_order(request):
         })
 
     return render(request, 'productsApp/checkout.html')
+
+@login_required
+def my_orders(request):
+    # Fetch orders for the authenticated user
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'productsApp/my_orders.html', {'orders': orders})
+
+@login_required
+def order_detail(request, order_id):
+    # Fetch the order for the user
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    return render(request, 'productsApp/order_detail.html', {'order': order})
