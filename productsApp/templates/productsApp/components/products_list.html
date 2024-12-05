@@ -9,7 +9,6 @@
             <p> Order it for you or your loved one</p>
                 
             <div class="row row-cols-1 row-cols-md-3 g-4">
-              <!-- First Cake -->
             {% for cake in cakes %}
               <div class="col">
                 <a href="{% url 'product_detail' cake.id %}" class="text-decoration-none">
@@ -24,9 +23,8 @@
                 </a>  
               </div>
             {% endfor %}
-              
       <!-- Wrapper for card items -->
-    </div>
+      </div>
   </div>
 </div>
 </div>
