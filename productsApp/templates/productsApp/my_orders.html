@@ -1,0 +1,23 @@
+{% extends 'productsApp/base.html' %} {% block title %}My Orders{% endblock %}
+{% block content %}
+<div class="container my-4 text-center">
+  <h1 class="h4 mb-4">My Orders</h1>
+
+  {% if orders %}
+  <div class="">
+    {% for order in orders %}
+    <div class="list-group-item mb-3">
+      <h5 class="mb-1">Order #{{ order.id }}</h5>
+      <p class="mb-1">Placed on {{ order.created_at|date:"F j, Y" }}<br /></p>
+      <p>Total Price: ${{ order.total_price }}</p>
+      <a href="{% url 'order_detail' order.id %}" class="btn btn-sm btn-custom"
+        >View Details</a
+      >
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>No orders found.</p>
+  {% endif %}
+</div>
+{% endblock %}

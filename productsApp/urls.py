@@ -19,7 +19,9 @@ urlpatterns = [
     path('cart/remove/<int:cart_item_id>/', views.remove_from_cart, name='remove_from_cart'),
 	path('product/<int:product_id>/',views.product_detail,name='product_detail'),
     path('contact/', views.contact, name='contact'), 
-    path('checkout/', views.place_order, name='checkout'),      
+    path('checkout/', views.place_order, name='checkout'), 
+    path('my-orders/', views.my_orders, name='my_orders'),  
+    path('order/<int:order_id>/', views.order_detail, name='order_detail'),   
 ]
 
 if settings.DEBUG:  # Only serve media files in development
